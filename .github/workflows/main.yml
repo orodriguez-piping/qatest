@@ -1,34 +1,12 @@
 name: End-to-end tests
-on: [push]
+on: push
 jobs:
   cypress-run:
-    runs-on: ubuntu-20.04
-    # let's make sure our "app" works on several versions of Node
-    strategy:
-      matrix:
-        node: [12, 14]
-    name: E2E on Node v${{ matrix.node }}
+    runs-on: ubuntu-22.04
     steps:
-      - name: Setup Node
-        uses: actions/setup-node@v2
-        with:
-          node-version: ${{ matrix.node }}
-      - run: node -v
-
       - name: Checkout
-        uses: actions/checkout@v2
-
-      # run Cypress tests and record them under the same run
-      # associated with commit SHA and just give a different group name
+        uses: actions/checkout@v4
+      # Install npm dependencies, cache them correctly
+      # and run all Cypress tests
       - name: Cypress run
-        uses: cypress-io/github-action@v2
-        with:
-          record: true
-          group: Tests on Node v${{ matrix.node }}
-          cache-key: node-v${{ matrix.node }}-on-${{ runner.os }}-hash-${{ hashFiles('yarn.lock') }}
-          env: lastName=Smith
-        env:
-          CYPRESS_firstName: Joe
-          CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
-
-      - run: node -v
+        uses: cypress-io/github-action@v6
