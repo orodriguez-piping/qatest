@@ -21,10 +21,10 @@ jobs:
         run: |
           pip install trcli
           trcli -y \
-            -h RAIL_HOST \
-            --project RAIL_PROJECT \
-            -u RAIL_USER \
-            -p RAIL_PASS \
+            -h ${{ vars.RAIL_HOST }} \
+            --project ${{ vars.RAIL_PROJECT }} \
+            -u ${{ secrets.RAIL_USER }} \
+            -p ${{ secrets.RAIL_PASS }} \
             parse_junit \
             --title "Automated Tests from GitHub workflow" \
             --run-description ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }} \
