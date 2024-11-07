@@ -27,5 +27,4 @@ jobs:
             -p ${{ secrets.RAIL_PASS }} \
             parse_junit \
             --title "Automated Tests from GitHub workflow" \
-            --run-description ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }} \
-            -f "reports/junit*.xml"
+            -f "reports/TEST*.xml"
